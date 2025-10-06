@@ -206,7 +206,43 @@ body {
     stroke: #fff;
 }
 
+/* notes */
+.note {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
 
+.note h2 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    color: #2d3748;
+}
+
+#note-area {
+    flex-grow: 1;
+    min-height: 150px;
+    resize: vertical;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #cbd5e0;
+    background: #f9fafb;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+#note-area:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 6px rgba(74, 144, 226, 0.5);
+    outline: none;
+}
 
 /* Vision board */
 .vision-board .vision-grid {

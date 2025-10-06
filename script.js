@@ -34,3 +34,14 @@ function addGoal() {
 
     goalInput.value = ""
 }
+
+// =========================
+// === NOTES ===============
+// =========================
+const noteArea = document.getElementById("note-area");
+
+noteArea.value = localStorage.getItem("userNote") || "";
+
+noteArea.addEventListener("input", () => {
+    localStorage.setItem("userNote", noteArea.value);
+});
