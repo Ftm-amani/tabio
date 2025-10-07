@@ -1,6 +1,4 @@
-// =========================
 // === MONTHLY GOALS =======
-// =========================
 const addGoalBtn = document.getElementById("addGoalBtn")
 const goalInput = document.getElementById("goal-input")
 const goalsList = document.getElementById("goals-list")
@@ -35,9 +33,7 @@ function addGoal() {
     goalInput.value = ""
 }
 
-// =========================
 // === NOTES ===============
-// =========================
 const noteArea = document.getElementById("note-area");
 
 noteArea.value = localStorage.getItem("userNote") || "";
@@ -45,3 +41,38 @@ noteArea.value = localStorage.getItem("userNote") || "";
 noteArea.addEventListener("input", () => {
     localStorage.setItem("userNote", noteArea.value);
 });
+
+// === BOOKMARKS ==========
+const addBtn = document.getElementById("addBookmarkBtn");
+const bookmarkInput = document.getElementById("bookmark-input");
+const bookmarksContainer = document.getElementById("bookmarks");
+
+addBtn.addEventListener("click", addBookmark);
+bookmarkInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") addBookmark();
+});
+
+function addBookmark() {
+    const value = bookmarkInput.value.trim();
+    if (!value) return;
+
+    let url = value;
+
+    if (/^[\w.-]+\.[a-z]{2,}$/i.test(value) && !/^https?:\/\//i.test(value)) {
+        url = "https://" + value;
+    } else if (!/^https?:\/\//i.test(value)) {
+        url = "https://www.google.com/search?q=" + encodeURIComponent(value);
+    }
+
+    const domain = new URL(url).hostname;
+    const favicon = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+
+    const item = document.createElement("a");
+    item.classList.add("bookmark-item");
+    item.href = url;
+    item.target = "_blank";
+    item.innerHTML = `<img src="${favicon}" alt="icon" class="bookmark-icon">`;
+
+    bookmarksContainer.appendChild(item);
+    bookmarkInput.value = "";
+}
