@@ -76,3 +76,35 @@ function addBookmark() {
     bookmarksContainer.appendChild(item);
     bookmarkInput.value = "";
 }
+
+// === VISION BOARD ========
+const modal = document.getElementById("visionModal");
+const addBtnVision = document.getElementById("addVisionBtn");
+const closeBtn = document.getElementById("closeVisionBtn");
+const saveBtn = document.getElementById("saveVisionBtn");
+const visionGrid = document.getElementById("visionGrid");
+const visionUrl = document.getElementById("visionUrl");
+const visionUpload = document.getElementById("visionUpload");
+
+addBtnVision.onclick = () => modal.classList.add("active");
+closeBtn.onclick = () => modal.classList.remove("active");
+
+saveBtn.onclick = () => {
+  let imgSrc = "";
+
+  if (visionUrl.value.trim()) {
+    imgSrc = visionUrl.value.trim();
+  } else if (visionUpload.files[0]) {
+    imgSrc = URL.createObjectURL(visionUpload.files[0]);
+  }
+
+  if (imgSrc) {
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    visionGrid.insertBefore(img, addBtnVision.nextSibling);
+  }
+
+  visionUrl.value = "";
+  visionUpload.value = "";
+  modal.classList.remove("active");
+};

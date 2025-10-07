@@ -67,13 +67,30 @@
                     </div>
                     <div class="vision-board">
                         <h2>Vision board</h2>
-                        <div class="vision-grid">
-                            <div class="vision-box"></div>
-                            <div class="vision-box"></div>
-                            <div class="vision-box"></div>
-                            <div class="vision-box"></div>
-                            <div class="vision-box"></div>
-                            <div class="vision-box"></div>
+
+                        <div id="visionGrid" class="vision-grid">
+                            <button id="addVisionBtn" class="vision-add-tile">+</button>
+                        </div>
+
+                        <div id="visionModal" class="vision-modal">
+                            <div class="vision-modal-content">
+                                <h3>Add to Vision Board</h3>
+
+                                <div class="vision-input-group">
+                                    <label for="visionUrl">Image URL</label>
+                                    <input type="text" id="visionUrl" placeholder="https://example.com/image.jpg" />
+                                </div>
+
+                                <div class="vision-input-group">
+                                    <label for="visionUpload">or Upload Image</label>
+                                    <input type="file" id="visionUpload" accept="image/*" />
+                                </div>
+
+                                <div class="vision-modal-actions">
+                                    <button id="saveVisionBtn" class="btn-primary">Add</button>
+                                    <button id="closeVisionBtn" class="btn-secondary">Cancel</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

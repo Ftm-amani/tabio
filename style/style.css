@@ -26,10 +26,8 @@ body {
     opacity: 0.5;
 }
 
-/* Container */
 .container {
     max-width: var(--dim-max-width);
-    /* -80px (calc(-80/16)rem) is -5rem, 40px is var(--spacing-6) */
     margin: -5rem auto var(--spacing-6) auto; 
     background: var(--color-white);
     padding: var(--spacing-5);
@@ -38,7 +36,6 @@ body {
     position: relative;
 }
 
-/* Header */
 .header {
     text-align: center;
     margin-bottom: var(--spacing-5);
@@ -54,7 +51,6 @@ body {
     border-radius: var(--rounded-circle);
     background: var(--color-placeholder) url("person.avif") center/cover no-repeat;
     margin: 0 auto;
-    /* -70px is roughly calc(-70/16)rem */
     margin-top: -4.375rem; 
     border: var(--dim-border-thickness) solid var(--color-white);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -89,14 +85,13 @@ body {
     outline: none;
     background: transparent;
     width: 100%;
-    font-size: var(--font-size-sm); /* Using sm for base font size */
+    font-size: var(--font-size-sm); 
 }
 
-/* Main layout */
 .main-content {
     display: flex;
     justify-content: center;
-    gap: 1.25rem; /* 20px - Keeping this simple as it's not on the main spacing scale */
+    gap: 1.25rem; 
     padding: 0;
 }
 
@@ -105,7 +100,7 @@ body {
 .right-column {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem; /* 20px */
+    gap: 1.25rem; 
 }
 
 .left-column {
@@ -120,7 +115,6 @@ body {
     flex: 1;
 }
 
-/* Card style */
 .monthly-goal,
 .note,
 .vision-board,
@@ -129,14 +123,12 @@ body {
 .date-box {
     background: var(--color-white);
     border-radius: var(--rounded-lg);
-    /* 1.2rem is slightly more than spacing-3 (1rem) */
     padding: var(--spacing-3); 
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* monthly-goals */
-
 #goals-list {
     display: flex;
     flex-direction: column;
@@ -147,7 +139,7 @@ body {
 .goal-item {
     display: flex;
     align-items: center;
-    gap: 0.625rem; /* 10px - Keeping this simple as it's not on the main spacing scale */
+    gap: 0.625rem;
     padding: 0.5rem 0.8rem;
     border-radius: var(--rounded-md);
     background: var(--color-surface-medium);
@@ -170,7 +162,7 @@ body {
 .add-goal {
     display: flex;
     gap: var(--spacing-1);
-    margin-top: 0.625rem; /* 10px */
+    margin-top: 0.625rem;
 }
 
 #goal-input {
@@ -248,10 +240,7 @@ body {
     outline: none;
 }
 
-/* ========================= */
-/* ====== BOOKMARKS ======== */
-/* ========================= */
-
+/* bookmarks */
 .bookmark-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -329,25 +318,148 @@ body {
   stroke: var(--color-white);
 }
 
-
 /* Vision board */
-.vision-board .vision-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-2);
-    margin-top: var(--spacing-3);
+.vision-board {
+  padding: var(--spacing-3);
+  background: var(--color-surface-base);
 }
 
-.vision-board .vision-box {
-    width: 100%;
-    height: var(--dim-size-medium);
-    background: var(--color-surface-medium);
-    border-radius: var(--rounded-md);
-    transition: background 0.3s ease;
+.vision-grid {
+  margin-top: var(--spacing-4);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--spacing-3);
 }
 
-.vision-board .vision-box:hover {
-    background: var(--color-hover-bg);
+.vision-add-tile {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--color-border-subtle);
+  border-radius: var(--rounded-md);
+  background: var(--color-surface-light);
+  color: var(--color-border-medium);
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  cursor: pointer;
+  transition: 
+    background 0.2s ease, 
+    border-color 0.2s ease, 
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.vision-add-tile:hover {
+  background: var(--color-hover-bg);
+  border-color: var(--color-blue-primary);
+  color: var(--color-blue-primary);
+  transform: translateY(-2px);
+}
+
+.vision-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--rounded-md);
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Modal */
+.vision-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.vision-modal.active {
+  display: flex;
+}
+
+.vision-modal-content {
+  background: var(--color-white);
+  padding: var(--spacing-4);
+  border-radius: var(--rounded-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+}
+
+.vision-modal-content h3 {
+  margin-bottom: var(--spacing-3);
+  color: var(--color-text-header);
+  font-size: var(--font-size-lg);
+}
+
+.vision-input-group {
+  margin-bottom: var(--spacing-3);
+}
+
+.vision-input-group label {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-body);
+  margin-bottom: var(--spacing-1);
+}
+
+.vision-input-group input[type="text"],
+.vision-input-group input[type="file"] {
+  width: 100%;
+  padding: var(--spacing-2);
+  border-radius: var(--rounded-md);
+  border: 1px solid var(--color-border-subtle);
+  font-size: var(--font-size-sm);
+  outline: none;
+  background: var(--color-white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vision-input-group input:focus {
+  border-color: var(--color-blue-primary);
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+}
+
+.vision-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+}
+
+.btn-primary {
+  background: var(--color-blue-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--rounded-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-blue-dark);
+}
+
+.btn-secondary {
+  background: var(--color-surface-medium);
+  border: none;
+  border-radius: var(--rounded-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  color: var(--color-text-body);
+  transition: background 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--color-hover-bg);
 }
 
 /* Checkbox row */
@@ -386,7 +498,7 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
-    margin-bottom: 0.625rem; /* 10px */
+    margin-bottom: 0.625rem; 
 }
 
 .habit-tracker input[type="checkbox"] {
