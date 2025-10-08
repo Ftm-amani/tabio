@@ -555,18 +555,109 @@ body {
     font-weight: 700;
 }
 
-/* Habit tracker */
-.habit-tracker .habit-item {
+/* Habit Tracker */
+.habit-tracker {
+    background: var(--color-white);
+    border-radius: var(--rounded-lg);
+    padding: var(--spacing-3);
+}
+
+.habit-tracker h2 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-2);
+    font-size: var(--font-size-md);
+    color: var(--color-text-header);
+}
+
+#habits-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+}
+
+.habit-item {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
-    margin-bottom: 0.625rem; 
+    padding: var(--spacing-2);
+    border-radius: var(--rounded-md);
+    background: var(--color-surface-medium);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-.habit-tracker input[type="checkbox"] {
-    width: var(--dim-checkbox-small);
-    height: var(--dim-checkbox-small);
+.habit-item:hover {
+    background: var(--color-hover-bg);
+    transform: translateY(-1px);
+}
+
+.habit-item.done {
+    background: var(--color-blue-primary);
+    color: var(--color-white);
+    text-decoration: line-through;
+}
+
+.add-habit {
+    display: flex;
+    gap: var(--spacing-1);
+    margin-top: var(--spacing-2);
+}
+
+#habit-input {
+    flex-grow: 1;
+    padding: var(--spacing-2);
+    border-radius: var(--rounded-md);
+    border: 1px solid var(--color-border-subtle);
+    outline: none;
+    font-size: var(--font-size-sm);
+    box-shadow: var(--shadow-inset);
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+#habit-input:focus {
+    border-color: var(--color-blue-primary);
+    box-shadow: 0 0 5px var(--color-blue-light);
+}
+
+#addHabitBtn {
+    background: var(--color-blue-primary);
+    border: none;
+    border-radius: var(--rounded-circle);
+    width: var(--dim-size-small);
+    height: var(--dim-size-small);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#addHabitBtn:hover {
+    background: var(--color-blue-dark);
+    transform: translateY(-2px);
+}
+
+#addHabitBtn svg {
+    stroke: var(--color-white);
+}
+
+.habit-progress {
+    display: flex;
+    gap: var(--spacing-0-5);
+    margin-left: auto;
+}
+
+.habit-progress .day {
+    width: 6px;
+    height: 6px;
+    background: var(--color-border-subtle);
+    border-radius: var(--rounded-circle);
+    transition: background 0.2s ease;
+}
+
+.habit-progress .day.completed {
+    background: var(--color-blue-primary);
 }
 
 /* Headings */

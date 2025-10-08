@@ -176,3 +176,62 @@ nextMonthBtn.addEventListener("click", () => {
 });
 
 renderCalendar(currentDate);
+
+// === HABIT TRACKER =======
+const addHabitBtn = document.getElementById("addHabitBtn");
+const habitInput = document.getElementById("habit-input");
+const habitsList = document.getElementById("habits-list");
+
+addHabitBtn.addEventListener("click", addHabit);
+habitInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") addHabit();
+});
+
+function addHabit() {
+    const value = habitInput.value.trim();
+    if (!value) return;
+
+    const item = document.createElement("div");
+    item.classList.add("habit-item");
+
+    const text = document.createElement("span");
+    text.textContent = value;
+    item.appendChild(text);
+
+    const progress = document.createElement("div");
+    progress.classList.add("habit-progress");
+    item.appendChild(progress);
+
+    // 21-day progress
+    const days = Array.from({ length: 21 }, () => {
+        const day = document.createElement("div");
+        day.classList.add("day");
+        progress.appendChild(day);
+        return day;
+    });
+
+    let streak = 0;
+
+    item.addEventListener("click", () => {
+        const today = new Date().toDateString();
+        const lastClick = item.dataset.lastClick;
+
+        if (lastClick === today) return;
+
+        if (lastClick) {
+            const lastDate = new Date(lastClick);
+            const diff = (new Date(today) - lastDate) / (1000 * 60 * 60 * 24);
+            if (diff > 1) streak = 0;
+        }
+
+        item.dataset.lastClick = today;
+
+        if (streak < 21) {
+            days[streak].classList.add("completed");
+            streak++;
+        }
+    });
+
+    habitsList.appendChild(item);
+    habitInput.value = "";
+}
