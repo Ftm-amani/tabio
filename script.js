@@ -124,3 +124,55 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
+
+// === CALENDAR ===========
+const calendarDays = document.getElementById("calendar-days");
+const monthYear = document.getElementById("monthYear");
+const prevMonthBtn = document.getElementById("prevMonth");
+const nextMonthBtn = document.getElementById("nextMonth");
+
+let currentDate = new Date();
+
+function renderCalendar(date) {
+    calendarDays.innerHTML = "";
+
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    monthYear.textContent = `${months[month]} ${year}`;
+
+    for (let i = 0; i < firstDay; i++) {
+        const blank = document.createElement("div");
+        calendarDays.appendChild(blank);
+    }
+
+    for (let day = 1; day <= lastDate; day++) {
+        const dayDiv = document.createElement("div");
+        dayDiv.textContent = day;
+
+        const today = new Date();
+        if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            dayDiv.classList.add("today");
+        }
+
+        calendarDays.appendChild(dayDiv);
+    }
+}
+
+prevMonthBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar(currentDate);
+});
+nextMonthBtn.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar(currentDate);
+});
+
+renderCalendar(currentDate);

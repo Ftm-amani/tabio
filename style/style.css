@@ -492,6 +492,69 @@ body {
     color: var(--color-white);
 }
 
+/* calendar: */
+.calendar {
+    background: var(--color-white);
+    border-radius: var(--rounded-lg);
+    padding: var(--spacing-3);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-2);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-header);
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: var(--font-size-md);
+    cursor: pointer;
+    color: var(--color-text-body);
+    transition: color 0.2s ease;
+}
+
+.calendar-header button:hover {
+    color: var(--color-blue-primary);
+}
+
+.calendar-weekdays,
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--spacing-1);
+    text-align: center;
+}
+
+.calendar-weekdays div {
+    font-weight: 600;
+    font-size: var(--font-size-xs);
+    color: var(--color-border-medium);
+}
+
+.calendar-days div {
+    padding: var(--spacing-1) 0;
+    border-radius: var(--spacing-1);
+    transition: background 0.2s ease;
+    cursor: pointer;
+    color: var(--color-text-body);
+
+}
+
+.calendar-days div:hover {
+    background: var(--color-surface-medium);
+}
+
+.calendar-days .today {
+    background: var(--color-blue-primary);
+    color: var(--color-white);
+    font-weight: 700;
+}
+
 /* Habit tracker */
 .habit-tracker .habit-item {
     display: flex;
