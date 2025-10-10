@@ -1,3 +1,21 @@
+// === GOOGLE SEARCH ==========
+const googleSearchInput = document.querySelector(".google-search input");
+
+function performGoogleSearch() {
+    const query = googleSearchInput.value.trim();
+    if (query) {
+        const searchUrl = "https://www.google.com/search?q=" + encodeURIComponent(query);
+        window.location.href = searchUrl; 
+        googleSearchInput.value = "";
+    }
+}
+
+googleSearchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        performGoogleSearch();
+    }
+});
+
 // === MONTHLY GOALS =======
 const addGoalBtn = document.getElementById("addGoalBtn")
 const goalInput = document.getElementById("goal-input")
