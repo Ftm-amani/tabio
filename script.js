@@ -26,6 +26,14 @@ goalInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") addGoal()
 })
 
+document.addEventListener('click', (e) => {
+    document.querySelectorAll('.goal-options-menu').forEach(menu => {
+        if (!menu.contains(e.target) && !e.target.closest('.goal-options-btn')) {
+            menu.classList.remove('active');
+        }
+    });
+});
+
 function addGoal() {
     const value = goalInput.value.trim()
     if (!value) return
@@ -35,20 +43,84 @@ function addGoal() {
 
     const checkbox = document.createElement("input")
     checkbox.type = "checkbox"
+    checkbox.checked = false;
 
     const text = document.createElement("span")
     text.textContent = value
 
+    const optionsBtn = document.createElement("button");
+    optionsBtn.classList.add("goal-options-btn");
+    optionsBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="19" cy="12" r="1"></circle>
+            <circle cx="5" cy="12" r="1"></circle>
+        </svg>
+    `;
+
+    const optionsMenu = document.createElement("div");
+    optionsMenu.classList.add("goal-options-menu");
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.addEventListener('click', () => editGoal(item, text));
+    
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.addEventListener('click', () => item.remove());
+
+    optionsMenu.append(editBtn, removeBtn);
+
+    optionsBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.goal-options-menu.active').forEach(menu => {
+            if (menu !== optionsMenu) menu.classList.remove('active');
+        });
+        optionsMenu.classList.toggle('active');
+    });
+
     checkbox.addEventListener("change", () => {
         item.classList.toggle("completed")
-    })
-
-    item.addEventListener("dblclick", () => item.remove())
-
-    item.append(checkbox, text)
+    });
+    
+    item.append(checkbox, text, optionsBtn, optionsMenu)
     goalsList.appendChild(item)
 
     goalInput.value = ""
+}
+
+function editGoal(item, textSpan) {
+    const menu = item.querySelector('.goal-options-menu');
+    menu.classList.remove('active');
+
+    const currentText = textSpan.textContent;
+    
+    const editInput = document.createElement('input');
+    editInput.type = 'text';
+    editInput.value = currentText;
+    editInput.classList.add('edit-goal-input');
+    
+    item.replaceChild(editInput, textSpan);
+    editInput.focus();
+    
+    const saveEdit = () => {
+        const newText = editInput.value.trim();
+        if (newText) {
+            textSpan.textContent = newText;
+        }
+        item.replaceChild(textSpan, editInput);
+        editInput.removeEventListener('keypress', handleEnter);
+        editInput.removeEventListener('blur', saveEdit);
+    };
+
+    const handleEnter = (e) => {
+        if (e.key === "Enter") {
+            saveEdit();
+        }
+    };
+
+    editInput.addEventListener('keypress', handleEnter);
+    editInput.addEventListener('blur', saveEdit); 
 }
 
 // === NOTES ===============
