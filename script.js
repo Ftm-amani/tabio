@@ -222,49 +222,52 @@ async function addBookmark() {
     bookmarkInput.value = "";
 }
 function editBookmark(item, labelSpan) {
+    const link = item.querySelector('.bookmark-content');
     const menu = item.querySelector('.goal-options-menu');
-    if (menu) menu.classList.remove('active');
+    menu.classList.remove('active');
 
-    const currentText = labelSpan.textContent;
+    const currentLabel = labelSpan.textContent;
 
     const editInput = document.createElement('input');
     editInput.type = 'text';
-    editInput.value = currentText;
+    editInput.value = currentLabel;
     editInput.classList.add('edit-bookmark-input');
-
-    editInput.addEventListener('click', (e) => e.stopPropagation());
 
     labelSpan.replaceWith(editInput);
     editInput.focus();
-    editInput.select();
 
     const saveEdit = () => {
-        const newText = editInput.value.trim();
-        if (newText) {
-            labelSpan.textContent = newText;
-        } else {
-            labelSpan.textContent = currentText;
+        const newLabel = editInput.value.trim();
+        if (!newLabel) return;
+
+        labelSpan.textContent = newLabel;
+
+        let newUrl = newLabel;
+        if (/^[\w.-]+\.[a-z]{2,}$/i.test(newLabel) && !/^https?:\/\//i.test(newLabel)) {
+            newUrl = "https://" + newLabel;
+        } else if (!/^https?:\/\//i.test(newLabel)) {
+            newUrl = "https://www.google.com/search?q=" + encodeURIComponent(newLabel);
         }
+
+        link.href = newUrl;
+
+        try {
+            const domain = new URL(newUrl).hostname;
+            const icon = link.querySelector('img');
+            if (icon) icon.src = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+        } catch {}
+
         editInput.replaceWith(labelSpan);
-        editInput.removeEventListener('keydown', handleKey);
-        editInput.removeEventListener('blur', onBlur);
     };
 
-    const handleKey = (e) => {
+    const handleEnter = (e) => {
         if (e.key === "Enter") {
             saveEdit();
-        } else if (e.key === "Escape") {
-            editInput.value = currentText;
-            saveEdit();
         }
     };
 
-    const onBlur = () => {
-        setTimeout(saveEdit, 0);
-    };
-
-    editInput.addEventListener('keydown', handleKey);
-    editInput.addEventListener('blur', onBlur);
+    editInput.addEventListener('keypress', handleEnter);
+    editInput.addEventListener('blur', saveEdit);
 }
 
 // === VISION BOARD ========
