@@ -221,6 +221,7 @@ async function addBookmark() {
 
     bookmarkInput.value = "";
 }
+
 function editBookmark(item, labelSpan) {
     const link = item.querySelector('.bookmark-content');
     const menu = item.querySelector('.goal-options-menu');
@@ -292,9 +293,22 @@ saveBtn.onclick = () => {
     }
 
     if (imgSrc) {
+        const tile = document.createElement("div");
+        tile.classList.add("vision-tile");
+
         const img = document.createElement("img");
         img.src = imgSrc;
-        visionGrid.insertBefore(img, addBtnVision.nextSibling);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("vision-delete-btn");
+        deleteBtn.innerHTML = `<img src="assets/images/remove.svg" alt="Delete" />`;
+        deleteBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            tile.remove();
+        });
+
+        tile.append(img, deleteBtn);
+        visionGrid.insertBefore(tile, addBtnVision.nextSibling);
     }
 
     visionUrl.value = "";
