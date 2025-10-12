@@ -1,3 +1,22 @@
+// === LOAD DOTS ICON ===
+let dotsSVG = null;
+
+async function getDotsSVG() {
+    if (!dotsSVG) {
+        const res = await fetch("assets/images/dots.svg");
+        dotsSVG = await res.text();
+    }
+    return dotsSVG;
+}
+
+async function createDotsButton() {
+    const optionsBtn = document.createElement("button");
+    optionsBtn.classList.add("goal-options-btn");
+    optionsBtn.title = "Options";
+    optionsBtn.innerHTML = await getDotsSVG();
+    return optionsBtn;
+}
+
 // === GOOGLE SEARCH ==========
 const googleSearchInput = document.querySelector(".google-search input");
 
@@ -34,29 +53,20 @@ document.addEventListener('click', (e) => {
     });
 });
 
-function addGoal() {
-    const value = goalInput.value.trim()
-    if (!value) return
+async function addGoal() {
+    const value = goalInput.value.trim();
+    if (!value) return;
 
-    const item = document.createElement("div")
-    item.classList.add("goal-item")
+    const item = document.createElement("div");
+    item.classList.add("goal-item");
 
-    const checkbox = document.createElement("input")
-    checkbox.type = "checkbox"
-    checkbox.checked = false;
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
 
-    const text = document.createElement("span")
-    text.textContent = value
+    const text = document.createElement("span");
+    text.textContent = value;
 
-    const optionsBtn = document.createElement("button");
-    optionsBtn.classList.add("goal-options-btn");
-    optionsBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="19" cy="12" r="1"></circle>
-            <circle cx="5" cy="12" r="1"></circle>
-        </svg>
-    `;
+    const optionsBtn = await createDotsButton();
 
     const optionsMenu = document.createElement("div");
     optionsMenu.classList.add("goal-options-menu");
