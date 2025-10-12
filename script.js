@@ -92,7 +92,7 @@ async function addGoal() {
     checkbox.addEventListener("change", () => {
         item.classList.toggle("completed")
     });
-    
+
     item.append(checkbox, text, optionsBtn, optionsMenu)
     goalsList.appendChild(item)
 
@@ -152,11 +152,12 @@ bookmarkInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") addBookmark();
 });
 
-function addBookmark() {
+async function addBookmark() {
     const value = bookmarkInput.value.trim();
     if (!value) return;
 
     let url = value;
+    let label = value;
 
     if (/^[\w.-]+\.[a-z]{2,}$/i.test(value) && !/^https?:\/\//i.test(value)) {
         url = "https://" + value;
@@ -164,17 +165,106 @@ function addBookmark() {
         url = "https://www.google.com/search?q=" + encodeURIComponent(value);
     }
 
+    try {
+        const urlObject = new URL(url);
+        label = urlObject.hostname.replace(/^www\./, '');
+    } catch (e) {}
+
     const domain = new URL(url).hostname;
     const favicon = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
 
-    const item = document.createElement("a");
+    const item = document.createElement("div");
     item.classList.add("bookmark-item");
-    item.href = url;
-    item.target = "_blank";
-    item.innerHTML = `<img src="${favicon}" alt="icon" class="bookmark-icon">`;
 
+    const contentWrapper = document.createElement("a");
+    contentWrapper.classList.add("bookmark-content");
+    contentWrapper.href = url;
+    contentWrapper.target = "_blank";
+
+    const icon = document.createElement("img");
+    icon.src = favicon;
+    icon.alt = "icon";
+    icon.classList.add("bookmark-icon");
+
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = label;
+    labelSpan.classList.add("bookmark-label");
+
+    const optionsBtn = await createDotsButton();
+
+    const optionsMenu = document.createElement("div");
+    optionsMenu.classList.add("goal-options-menu");
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit Label";
+    editBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        editBookmark(item, labelSpan);
+    });
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.addEventListener('click', () => item.remove());
+
+    optionsMenu.append(editBtn, removeBtn);
+
+    optionsBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.goal-options-menu.active').forEach(menu => {
+            if (menu !== optionsMenu) menu.classList.remove('active');
+        });
+        optionsMenu.classList.toggle('active');
+    });
+
+    contentWrapper.append(icon, labelSpan);
+    item.append(optionsBtn, optionsMenu, contentWrapper);
     bookmarksContainer.appendChild(item);
+
     bookmarkInput.value = "";
+}
+function editBookmark(item, labelSpan) {
+    const menu = item.querySelector('.goal-options-menu');
+    if (menu) menu.classList.remove('active');
+
+    const currentText = labelSpan.textContent;
+
+    const editInput = document.createElement('input');
+    editInput.type = 'text';
+    editInput.value = currentText;
+    editInput.classList.add('edit-bookmark-input');
+
+    editInput.addEventListener('click', (e) => e.stopPropagation());
+
+    labelSpan.replaceWith(editInput);
+    editInput.focus();
+    editInput.select();
+
+    const saveEdit = () => {
+        const newText = editInput.value.trim();
+        if (newText) {
+            labelSpan.textContent = newText;
+        } else {
+            labelSpan.textContent = currentText;
+        }
+        editInput.replaceWith(labelSpan);
+        editInput.removeEventListener('keydown', handleKey);
+        editInput.removeEventListener('blur', onBlur);
+    };
+
+    const handleKey = (e) => {
+        if (e.key === "Enter") {
+            saveEdit();
+        } else if (e.key === "Escape") {
+            editInput.value = currentText;
+            saveEdit();
+        }
+    };
+
+    const onBlur = () => {
+        setTimeout(saveEdit, 0);
+    };
+
+    editInput.addEventListener('keydown', handleKey);
+    editInput.addEventListener('blur', onBlur);
 }
 
 // === VISION BOARD ========
@@ -190,23 +280,23 @@ addBtnVision.onclick = () => modal.classList.add("active");
 closeBtn.onclick = () => modal.classList.remove("active");
 
 saveBtn.onclick = () => {
-  let imgSrc = "";
+    let imgSrc = "";
 
-  if (visionUrl.value.trim()) {
-    imgSrc = visionUrl.value.trim();
-  } else if (visionUpload.files[0]) {
-    imgSrc = URL.createObjectURL(visionUpload.files[0]);
-  }
+    if (visionUrl.value.trim()) {
+        imgSrc = visionUrl.value.trim();
+    } else if (visionUpload.files[0]) {
+        imgSrc = URL.createObjectURL(visionUpload.files[0]);
+    }
 
-  if (imgSrc) {
-    const img = document.createElement("img");
-    img.src = imgSrc;
-    visionGrid.insertBefore(img, addBtnVision.nextSibling);
-  }
+    if (imgSrc) {
+        const img = document.createElement("img");
+        img.src = imgSrc;
+        visionGrid.insertBefore(img, addBtnVision.nextSibling);
+    }
 
-  visionUrl.value = "";
-  visionUpload.value = "";
-  modal.classList.remove("active");
+    visionUrl.value = "";
+    visionUpload.value = "";
+    modal.classList.remove("active");
 };
 
 // === CLOCK ==============
@@ -303,7 +393,9 @@ function addHabit() {
     item.appendChild(progress);
 
     // 21-day progress
-    const days = Array.from({ length: 21 }, () => {
+    const days = Array.from({
+        length: 21
+    }, () => {
         const day = document.createElement("div");
         day.classList.add("day");
         progress.appendChild(day);
