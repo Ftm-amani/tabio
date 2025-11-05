@@ -10,137 +10,137 @@
 
 <body>
 
-    <div class="cover-image">
-        <img src="assets/images/person.avif" alt="">
-    </div>
+    <div id="background">
+        <div class="container">
 
-    <div class="container">
-
-        <header class="header">
-            <div class="header-content-wrapper">
-                <div class="profile-pic"></div>
-                <h1 class="welcome-text">Welcome dear Fatemeh!</h1>
-            </div>
-        </header>
-
-        <main>
-            <div class="google-search-row">
-                <div class="google-search">
-                    <input type="text" placeholder="Google Search">
+            <header class="header">
+                <div class="header-content-wrapper">
+                    <div class="profile-pic"></div>
+                    <h1 class="welcome-text">Welcome dear Fatemeh!</h1>
                 </div>
-            </div>
-            <div class="main-content">
+            </header>
 
-                <div class="left-column">
-                    <div class="monthly-goal">
-                        <h2>Monthly Goals</h2>
-                        <div id="goals-list">
-                        </div>
-                        <div class="add-goal">
-                            <input type="text" id="goal-input" placeholder="Add new goal">
-                            <button id="addGoalBtn" title="Add goal">
-                                <img src="assets/images/plus.svg" alt="plus">
-                            </button>
-                        </div>
-                    </div>
-                    <div class="note">
-                        <h2>Notes</h2>
-                        <textarea id="note-area" placeholder="Write your thoughts here..."></textarea>
+            <main>
+                <div class="google-search-row">
+                    <div class="google-search">
+                        <input type="text" placeholder="Google Search">
                     </div>
                 </div>
+                <div class="main-content">
 
-                <div class="center-column">
-                    <div class="bookmark-section">
-                        <h2>Bookmarks</h2>
-                        <div id="bookmarks" class="bookmark-grid">
+                    <div class="left-column">
+                        <div class="card-container">
+
+                            <h2>Monthly Goals</h2>
+                            <div id="goals-list">
+                            </div>
+                            <div class="add-goal">
+                                <input type="text" id="goal-input" placeholder="Add new goal">
+                                <button id="addGoalBtn" title="Add goal">
+                                    <img src="assets/images/plus.svg" alt="plus">
+                                </button>
+                            </div>
                         </div>
-                        <div class="add-bookmark">
-                            <input type="text" id="bookmark-input" placeholder="Enter URL or name">
-                            <button id="addBookmarkBtn" title="Add bookmark">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                            </button>
+                        <div class="card-container note">
+                            <h2>Notes</h2>
+                            <textarea id="note-area" placeholder="Write your thoughts here..."></textarea>
                         </div>
                     </div>
-                    <div class="vision-board">
-                        <h2>Vision board</h2>
 
-                        <div id="visionGrid" class="vision-grid">
-                            <button id="addVisionBtn" class="vision-add-tile">+</button>
+                    <div class="center-column">
+                        <div class="card-container">
+                            <h2>Bookmarks</h2>
+                            <div id="bookmarks" class="bookmark-grid">
+                            </div>
+
+                            <div class="add-bookmark">
+                                <input type="text" id="bookmark-input" placeholder="Enter URL or name">
+                                <button id="addBookmarkBtn" title="Add bookmark">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
+                        <div class="card-container">
+                            <h2>Vision board</h2>
 
-                        <div id="visionModal" class="vision-modal">
-                            <div class="vision-modal-content">
-                                <h3>Add to Vision Board</h3>
+                            <div id="visionGrid" class="vision-grid">
+                                <button id="addVisionBtn" class="vision-add-tile">+</button>
+                            </div>
 
-                                <div class="vision-input-group">
-                                    <label for="visionUrl">Image URL</label>
-                                    <input type="text" id="visionUrl" placeholder="https://example.com/image.jpg" />
-                                </div>
+                            <div id="visionModal" class="vision-modal">
+                                <div class="vision-modal-content">
+                                    <h3>Add to Vision Board</h3>
 
-                                <div class="vision-input-group">
-                                    <label for="visionUpload">or Upload Image</label>
-                                    <input type="file" id="visionUpload" accept="image/*" />
-                                </div>
+                                    <div class="vision-input-group">
+                                        <label for="visionUrl">Image URL</label>
+                                        <input type="text" id="visionUrl" placeholder="https://example.com/image.jpg" />
+                                    </div>
 
-                                <div class="vision-modal-actions">
-                                    <button id="saveVisionBtn" class="btn-primary">Add</button>
-                                    <button id="closeVisionBtn" class="btn-secondary">Cancel</button>
+                                    <div class="vision-input-group">
+                                        <label for="visionUpload">or Upload Image</label>
+                                        <input type="file" id="visionUpload" accept="image/*" />
+                                    </div>
+
+                                    <div class="vision-modal-actions">
+                                        <button id="saveVisionBtn" class="btn-primary">Add</button>
+                                        <button id="closeVisionBtn" class="btn-secondary">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="right-column">
-                    <div class="date-box">
-                        <div id="clock">
-                            <span id="hours">--</span>:
-                            <span id="minutes">--</span>:
-                            <span id="seconds">--</span>
-                        </div>
-                    </div>
-                    <div class="calendar">
-                        <div class="calendar-header">
-                            <button id="prevMonth">&#10094;</button>
-                            <span id="monthYear">October 2025</span>
-                            <button id="nextMonth">&#10095;</button>
-                        </div>
-                        <div class="calendar-body">
-                            <div class="calendar-weekdays">
-                                <div>Sun</div>
-                                <div>Mon</div>
-                                <div>Tue</div>
-                                <div>Wed</div>
-                                <div>Thu</div>
-                                <div>Fri</div>
-                                <div>Sat</div>
-                            </div>
-                            <div class="calendar-days" id="calendar-days">
+                    <div class="right-column">
+                        <div class="card-container">
+                            <div id="clock">
+                                <span id="hours">--</span>:
+                                <span id="minutes">--</span>:
+                                <span id="seconds">--</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="habit-tracker">
-                        <h2>Habit Tracker</h2>
-                        <div id="habits-list">
+                        <div class="card-container">
+                            <div class="calendar-header">
+                                <button id="prevMonth">&#10094;</button>
+                                <span id="monthYear">October 2025</span>
+                                <button id="nextMonth">&#10095;</button>
+                            </div>
+                            <div class="calendar-body">
+                                <div class="calendar-weekdays">
+                                    <div>Sun</div>
+                                    <div>Mon</div>
+                                    <div>Tue</div>
+                                    <div>Wed</div>
+                                    <div>Thu</div>
+                                    <div>Fri</div>
+                                    <div>Sat</div>
+                                </div>
+                                <div class="calendar-days" id="calendar-days">
+                                </div>
+                            </div>
                         </div>
-                        <div class="add-habit">
-                            <input type="text" id="habit-input" placeholder="Add new habit">
-                            <button id="addHabitBtn" title="Add habit">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff"
-                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                            </button>
+                        <div class="card-container">
+                            <h2>Habit Tracker</h2>
+                            <div id="habits-list">
+                            </div>
+                            <div class="add-habit">
+                                <input type="text" id="habit-input" placeholder="Add new habit">
+                                <button id="addHabitBtn" title="Add habit">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
     <script src="script.js" type="text/javascript"></script>
 </body>
