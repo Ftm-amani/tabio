@@ -394,53 +394,87 @@ habitInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") addHabit();
 });
 
+// Load saved habits
+let habits = JSON.parse(localStorage.getItem("habits")) || [];
+habits.forEach(h => renderHabit(h));
+
+console.log(habits);
+
 function addHabit() {
     const value = habitInput.value.trim();
     if (!value) return;
 
+    const habit = {
+        name: value,
+        streak: 0,
+        lastClick: null // string date
+    };
+
+    habits.push(habit);
+    saveHabits();
+    renderHabit(habit);
+
+    habitInput.value = "";
+}
+
+function renderHabit(habit) {
     const item = document.createElement("div");
     item.classList.add("habit-item");
 
     const text = document.createElement("span");
-    text.textContent = value;
+    text.textContent = habit.name;
     item.appendChild(text);
 
     const progress = document.createElement("div");
     progress.classList.add("habit-progress");
     item.appendChild(progress);
 
-    // 21-day progress
-    const days = Array.from({
-        length: 21
-    }, () => {
+    const days = Array.from({ length: 21 }, () => {
         const day = document.createElement("div");
         day.classList.add("day");
         progress.appendChild(day);
         return day;
     });
 
-    let streak = 0;
+    // Initialize visual streak
+    for (let i = 0; i < habit.streak; i++) {
+        days[i].classList.add("completed");
+    }
 
     item.addEventListener("click", () => {
-        const today = new Date().toDateString();
-        const lastClick = item.dataset.lastClick;
+        // const today = new Date().toDateString(); //testing
+        const today = new Date().toISOString().split("T")[0]; 
 
+        const lastClick = habit.lastClick;
+
+        // Already clicked today
         if (lastClick === today) return;
 
+        console.log("lastClick", lastClick);
+
+        // Reset streak if a day was missed
         if (lastClick) {
             const lastDate = new Date(lastClick);
             const diff = (new Date(today) - lastDate) / (1000 * 60 * 60 * 24);
-            if (diff > 1) streak = 0;
+            if (diff > 1) {
+                habit.streak = 0;
+                days.forEach(d => d.classList.remove("completed"));
+            }
         }
 
-        item.dataset.lastClick = today;
-
-        if (streak < 21) {
-            days[streak].classList.add("completed");
-            streak++;
+        // Update streak
+        if (habit.streak < 21) {
+            days[habit.streak].classList.add("completed");
+            habit.streak++;
         }
+
+        habit.lastClick = today;
+        saveHabits();
     });
 
     habitsList.appendChild(item);
-    habitInput.value = "";
+}
+
+function saveHabits() {
+    localStorage.setItem("habits", JSON.stringify(habits));
 }
