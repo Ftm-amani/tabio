@@ -6,7 +6,20 @@
     "chrome_url_overrides": {
         "newtab": "index.html"
     },
+    "background": {
+        "service_worker": "background.js"
+    },
     "permissions": [
+        "identity",
         "storage"
+    ],
+    "oauth2": {
+        "client_id": "REPLACE_WITH_YOUR_OWN_CLIENT_ID.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/calendar.readonly"
+        ]
+    },
+    "host_permissions": [
+        "https://www.googleapis.com/"
     ]
 }
